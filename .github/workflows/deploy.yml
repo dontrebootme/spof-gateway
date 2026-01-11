@@ -1,0 +1,23 @@
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      # We don't have a build step for this gateway repo as it's just config
+      # If we had functions or a frontend build, we would add 'npm ci && npm run build' here
+
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SPOF_IO }}'
+          projectId: spof-io
+          channelId: live
